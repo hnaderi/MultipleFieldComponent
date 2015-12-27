@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="./lib/jquery.js"></script>
+    <script type="text/javascript" src="./lib/MultipleField.js"></script>
+    <link href="./styles/MultipleFieldSample.css" rel="stylesheet" />
+    <title>Multiple Field Sample Page</title>
+</head>
+<body>
+    <div>
+        <p>
+            <strong>MultipleField Component <a id="version" href="#ChangeLog">v.0.1</a></strong><br />
+            Sample Page for Documentation<br />
+        </p>
+    </div>
+
+    <div class="page">
+        <div id="Sample" class="container">
+            <!-- Declaring a MultipleField Component with an id -->
+            <div class="MultipleField" id="DefaultInput">
+                <!--
+                     Declaring an input field used as a template
+                    (only the first declared will be used)
+                -->
+                <div class="InputField">
+                    Input Text : <input type="text" />
+                    <!--
+                        Declaring an element to be used as remove button
+                    -->
+                    <a class="RemoveField" href="#">remove</a>
+                </div>
+                <!--
+                     Declaring an element to be used as add button
+                -->
+                <a class="AddField" href="#">Add</a>
+            </div>
+        </div>
+        Logs:
+        <div class="container logPanel">
+        </div>
+
+    </div>
+    <div id="ChangeLog" class="page container">
+        <div style=" margin: 5px 0px;">
+            <strong>Change Log</strong>
+        </div>
+        <div>
+            <div>Initial version</div>
+            <ol>
+                <li>Add</li>
+                <li>Remove</li>
+                <li>Simple getValues</li>
+                <li>Event mechanism</li>
+                <li>Add event</li>
+                <li>Remove event</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $("#version").click(function () {
+            $(".page").slideToggle();
+        });
+
+        var addEventHandler = $.multipleField.instances("DefaultInput")
+            .on("fieldAdd", function (params) {
+                $(".logPanel").append("<div>Field Added</div>");
+            });
+        var removeEventHandler = $.multipleField.instances("DefaultInput")
+            .on("fieldRemove", function (params) {
+                $(".logPanel").append("<div>Field with value of " + ($(params.element).find(":input:text").val() || "<i>empty</i>") + " Removed</div>");
+            });
+    });
+</script>
